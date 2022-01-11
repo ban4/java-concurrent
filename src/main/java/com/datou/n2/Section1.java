@@ -6,9 +6,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 /**
- * 2.1 创建和运行线程
+ * com.datou.n3.2.1 创建和运行线程
  */
-@Slf4j(topic = "c")     //  logback.xml 中 <logger name="c">
+@Slf4j(topic = "log")     //  logback.xml 中 <logger name="c">
 public class Section1 {
 
     public static void main(String[] args) {
