@@ -30,7 +30,7 @@ public class Section5Util {
 
     // 模拟下载返回结果
     public static List<String> download() {
-        sleep(4);
+        sleep(8);
         return Arrays.asList("aaa,bb,c,ddd,e");
     }
 }

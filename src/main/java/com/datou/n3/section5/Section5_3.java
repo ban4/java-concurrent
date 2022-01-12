@@ -28,7 +28,13 @@ public class Section5_3 {
             guardedObject.complete(response);
         }, "t1").start();
 
-        log.debug("waiting....");
+
+        new Thread(() -> {
+            Section5Util.sleep(2);
+            log.debug("虚假唤醒");
+            guardedObject.complete();
+        }, "t2").start();
+
         // 主线程阻塞等待
         Object o = guardedObject.get(10 * 1000);
         log.debug("get response : {}", o);
@@ -59,7 +65,7 @@ class GuardedObject3 {
                 Section5Util.wait(lock, waitTime);
                 // 3) 如果提前被唤醒，这时已经经历的时间假设为 400
                 timePassed = System.currentTimeMillis() - begin;
-                log.debug("timePassed: {}, object is null", timePassed);
+                log.debug("timePassed: {}, object is {}", timePassed, this.response);
             }
             return response;
         }
@@ -69,6 +75,13 @@ class GuardedObject3 {
         synchronized (lock) {
             // 条件满足，通知等待线程
             this.response = response;
+            lock.notifyAll();
+        }
+    }
+
+    // 虚假唤醒
+    public void complete() {
+        synchronized (lock) {
             lock.notifyAll();
         }
     }
