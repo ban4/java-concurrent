@@ -8,10 +8,10 @@
         </encoder>
     </appender>
 <!--    @Slf4j(topic = "log")   即可输出特定日志 -->
-    <logger name="log" level="debug" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-    <root level="ERROR">
+<!--    <logger name="log" level="debug" additivity="false">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </logger>-->
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 </configuration>
