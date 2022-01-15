@@ -1,5 +1,6 @@
 package com.datou.n4.section4;
 
+import com.datou.util.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.locks.Condition;
@@ -45,11 +46,7 @@ public class Section4_8 {
                 log.debug("烟 start               ");
                 lock.lock();
                 while (!hasCigrette) {
-                    try {
-                        waitCigaretteQueue.await(); //等待
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    ThreadUtil.await(waitCigaretteQueue);
                 }
                 log.debug("等到了它的烟               ");
             } finally {
@@ -62,11 +59,7 @@ public class Section4_8 {
                 log.debug("               早餐 start");
                 lock.lock();
                 while (!hasBreakfast) {
-                    try {
-                        waitbreakfastQueue.await();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    ThreadUtil.await(waitbreakfastQueue);
                 }
                 log.debug("               等到了它的早餐");
             } finally {

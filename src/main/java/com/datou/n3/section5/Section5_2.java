@@ -1,5 +1,6 @@
 package com.datou.n3.section5;
 
+import com.datou.util.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Section5_2 {
         GuardedObject2 guardedObject = new GuardedObject2();
 
         new Thread(() -> {
-            List<String> response = Section5Util.download();
+            List<String> response = ThreadUtil.download();
             log.debug("response complete.......");
             guardedObject.complete(response);
         }, "t1").start();
@@ -35,7 +36,7 @@ class GuardedObject2{
     public Object get() {
         synchronized (lock) {
             while (response == null) {
-                Section5Util.wait(lock);
+                ThreadUtil.wait(lock);
             }
             return response;
         }

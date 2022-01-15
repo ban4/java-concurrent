@@ -1,5 +1,6 @@
 package com.datou.n3.section5;
 
+import com.datou.util.ThreadUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -23,14 +24,14 @@ public class Section5_3 {
     public static void main(String[] args) {
         GuardedObject3 guardedObject = new GuardedObject3();
         new Thread(() -> {
-            List<String> response = Section5Util.download();
+            List<String> response = ThreadUtil.download();
             log.debug("response complete.......");
             guardedObject.complete(response);
         }, "t1").start();
 
 
         new Thread(() -> {
-            Section5Util.sleep(2);
+            ThreadUtil.sleep(2);
             log.debug("虚假唤醒");
             guardedObject.complete();
         }, "t2").start();
@@ -62,7 +63,7 @@ class GuardedObject3 {
                     log.debug("break....");
                     break;
                 }
-                Section5Util.wait(lock, waitTime);
+                ThreadUtil.wait(lock, waitTime);
                 // 3) 如果提前被唤醒，这时已经经历的时间假设为 400
                 timePassed = System.currentTimeMillis() - begin;
                 log.debug("timePassed: {}, object is {}", timePassed, this.response);
